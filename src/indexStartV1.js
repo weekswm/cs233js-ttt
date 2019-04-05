@@ -14,6 +14,8 @@ var lines = [
     [2, 4, 6],
     ];
 
+window.onload = init;  
+
 function init()
 {
     // Add an onclick handler to all of the squares
@@ -26,7 +28,6 @@ function init()
         squares[i] = boardSquares[i];
         boardSquares[i].onclick = handleClick;
     }
-
 }
 
 function handleClick() {
@@ -41,13 +42,14 @@ function handleClick() {
             if (xIsNext == true)
             {    
                 // Set the element in the squares array to the player's symbol
-                clickedSquare.innerHTML = "X";
+                event.srcElement.innerHTML = "X";
+                squares[clickedSquare] = "x";
                 // Set the onclick handler for this square in the UI to an empty anonymous function or arrow function
-                clickedSquare.removeEventListener("onclick", handleClick);
+                document.getElementById(clickedSquare).removeEventListener("onclick", handleClick);
                 // Update the variable xIsNext
                 xIsNext = false;
                 // If calculateWinner returns true
-                if (calculateWinner == true)
+                if (calculateWinner() == true)
                 {
                 // highlight the winner and disable all of the squares
                     highlightWinner();
@@ -59,10 +61,11 @@ function handleClick() {
             }
             else
             {
-                clickedSquare.innerHTML = "O";
-                clickedSquare.removeEventListener("onclick", handleClick);
+                event.srcElement.innerHTML = "O";
+                squares[clickedSquare] = "O";
+                document.getElementById(clickedSquare).removeEventListener("onclick", handleClick);
                 xIsNext = true;
-                if (calculateWinner == true)
+                if (calculateWinner() == true)
                 {
                     highlightWinner();
                     disableAll();
@@ -100,12 +103,11 @@ function highlightWinner() {
     else
         document.getElementById("status").innerHTML = "Player O Wins!";
     // Iterate through the winningLine array.  It contains the indices of the winning squares
-    for (var i = 0; i < squares.length; i++)
+    for (var i = 0; i < winningLine.length; i++)
     {
         //      get the next square using the current index in the winningLine array as the id
         //      add the class red to the square
-        var clickedId = event.srcElement.id;
-        document.getElementById(clickedId).class = "red";   
+        document.getElementById(winningLine[i]).style.color = "red";   
     }
     // Disable all of the squares
     disableAll();
@@ -126,4 +128,3 @@ function doNothing() {
 }
 
 // When the page has finished loading, call the function init  
-window.onload = init;  
