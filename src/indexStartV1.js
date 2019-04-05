@@ -43,7 +43,7 @@ function handleClick() {
             {    
                 // Set the element in the squares array to the player's symbol
                 event.srcElement.innerHTML = "X";
-                squares[clickedSquare] = "x";
+                squares[clickedSquare] = "X";
                 // Set the onclick handler for this square in the UI to an empty anonymous function or arrow function
                 document.getElementById(clickedSquare).removeEventListener("onclick", handleClick);
                 // Update the variable xIsNext
