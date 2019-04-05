@@ -61,6 +61,7 @@ function handleClick() {
             }
             else
             {
+                // Repeat above, but change "X" to "O"
                 event.srcElement.innerHTML = "O";
                 squares[clickedSquare] = "O";
                 document.getElementById(clickedSquare).removeEventListener("onclick", handleClick);
