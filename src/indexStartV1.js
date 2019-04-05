@@ -18,22 +18,60 @@ function init()
 {
     // Add an onclick handler to all of the squares
     // The name attribute for all of the divs is square
-    // Use the function handleClick to handle the event 
+    // Use the function handleClick to handle the event
+    var boardSquares = document.getElementsByName("square");
+
+    for (var i = 0; i < boardSquares.length; i++) 
+    {
+        squares[i] = boardSquares[i];
+        boardSquares[i].onclick = handleClick;
+    }
+
 }
 
 function handleClick() {
 
     // Get the id from the square and put it in a variable
     // Remember that the id is an integer 0 - 8
-
-    // Set the element in the squares array to the player's symbol
-    // Update the inner html for this square in the UI
-    // Set the onclick handler for this square in the UI to an empty anonymous function or arrow function
-    // Update the variable xIsNext
-
-    // If calculateWinner returns true
-    // highlight the winner and disable all of the squares
-    // otherwise update the status in the UI to display the player
+    var clickedSquare = event.srcElement.id;
+    for (var i = 0; i < squares.length; i++)
+    {
+        if (i == clickedSquare)
+        {
+            if (xIsNext == true)
+            {    
+                // Set the element in the squares array to the player's symbol
+                clickedSquare.innerHTML = "X";
+                // Set the onclick handler for this square in the UI to an empty anonymous function or arrow function
+                clickedSquare.removeEventListener("onclick", handleClick);
+                // Update the variable xIsNext
+                xIsNext = false;
+                // If calculateWinner returns true
+                if (calculateWinner == true)
+                {
+                // highlight the winner and disable all of the squares
+                    highlightWinner();
+                    disableAll();
+                }
+                // otherwise update the status in the UI to display the player
+                else
+                    document.getElementById("status").innerHTML = "Next Player: O";
+            }
+            else
+            {
+                clickedSquare.innerHTML = "O";
+                clickedSquare.removeEventListener("onclick", handleClick);
+                xIsNext = true;
+                if (calculateWinner == true)
+                {
+                    highlightWinner();
+                    disableAll();
+                }
+                else
+                    document.getElementById("status").innerHTML = "Next Player: X";    
+            }
+        }
+    }
 }
 
 function calculateWinner() {
@@ -56,18 +94,36 @@ function calculateWinner() {
 
 //
 function highlightWinner() {
-
+    if (!xIsNext)
     // Update the status in the UI to display the winner
+        document.getElementById("status").innerHTML = "Player X Wins!";
+    else
+        document.getElementById("status").innerHTML = "Player O Wins!";
     // Iterate through the winningLine array.  It contains the indices of the winning squares
-    //      get the next square using the current index in the winningLine array as the id
-    //      add the class red to the square
+    for (var i = 0; i < squares.length; i++)
+    {
+        //      get the next square using the current index in the winningLine array as the id
+        //      add the class red to the square
+        var clickedId = event.srcElement.id;
+        document.getElementById(clickedId).class = "red";   
+    }
     // Disable all of the squares
+    disableAll();
 }
 
 function disableAll() {
 
     // Set the onclick handler for all squares to function that does nothing
     // The id of the square is a number 0 - 8
+    for (var i = 0; i < squares.length; i++)
+    {
+        squares[i].onclick = doNothing;
+    }
 }
 
-// When the page has finished loading, call the function init    
+function doNothing() {
+    return null;
+}
+
+// When the page has finished loading, call the function init  
+window.onload = init;  
