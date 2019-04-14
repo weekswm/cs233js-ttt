@@ -28,6 +28,7 @@ class TTT
         this.calculateWinner = this.calculateWinner.bind(this);
         this.highlightWinner = this.highlightWinner.bind(this);
         this.disableAll = this.disableAll.bind(this);
+        this.doNothing = this.doNothing.bind(this);
         this.init();
     }
 
@@ -127,6 +128,36 @@ class TTT
                 }
             }
         }
+    }
+
+    highlightWinner() {
+        if (!this.xIsNext)
+        // Update the status in the UI to display the winner
+            document.getElementById("status").innerHTML = "Player X Wins!";
+        else
+            document.getElementById("status").innerHTML = "Player O Wins!";
+        // Iterate through the winningLine array.  It contains the indices of the winning squares
+        for (let i = 0; i < this.winningLine.length; i++)
+        {
+            //      get the next square using the current index in the winningLine array as the id
+            //      add the class red to the square
+            document.getElementById(this.winningLine[i]).style.color = "red";   
+        }
+        // Disable all of the squares
+        this.disableAll();
+    }
+
+    disableAll() {
+        // Set the onclick handler for all squares to function that does nothing
+        // The id of the square is a number 0 - 8
+        for (let i = 0; i < this.squares.length; i++)
+        {
+            this.squares[i].onclick = this.doNothing;
+        }
+    }
+    
+    doNothing() {
+        return null;
     }
 }
 
