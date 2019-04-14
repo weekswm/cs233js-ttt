@@ -26,9 +26,9 @@ class TTT
             [2, 4, 6],
             ];
         this.calculateWinner = this.calculateWinner.bind(this);
-        /*this.highlightWinner = this.highlightWinner.bind(this);
+        this.highlightWinner = this.highlightWinner.bind(this);
         this.disableAll = this.disableAll.bind(this);
-        this.doNothing = this.doNothing.bind(this);*/
+        this.doNothing = this.doNothing.bind(this);
         this.init();
     }
 
