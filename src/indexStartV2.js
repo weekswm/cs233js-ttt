@@ -26,9 +26,9 @@ class TTT
             [2, 4, 6],
             ];
         this.calculateWinner = this.calculateWinner.bind(this);
-        this.highlightWinner = this.highlightWinner.bind(this);
+        /*this.highlightWinner = this.highlightWinner.bind(this);
         this.disableAll = this.disableAll.bind(this);
-        this.doNothing = this.doNothing.bind(this);
+        this.doNothing = this.doNothing.bind(this);*/
         this.init();
     }
 
@@ -58,10 +58,12 @@ class TTT
       /*CalculateWinner
         -   use destructuring assingment to assign values to
             a b and c in one line*/
-
+            
     calculateWinner() {
         for (let i = 0; i < this.lines.length; i++) {
-            [a, b, c] = this.lines[i][0, 1, 2];     
+            let a = this.lines[i][0];
+            let b = this.lines[i][1];
+            let c = this.lines[i][2];     
             if (this.squares[a] && 
                 this.squares[a] === this.squares[b] && 
                 this.squares[a] === this.squares[c]) {
@@ -86,7 +88,7 @@ class TTT
 
         // Get the id from the square and put it in a variable
         // Remember that the id is an integer 0 - 8
-        const clickedSquare = event.srcElement.id;
+        let clickedSquare = event.srcElement.id;
         for (i = 0; i < this.squares.length; i++)
         {
             if (i == clickedSquare)
@@ -152,7 +154,7 @@ class TTT
         // The id of the square is a number 0 - 8
         for (let i = 0; i < this.squares.length; i++)
         {
-            this.squares[i].onclick = this.doNothing;
+            this.squares[i].onclick = this.doNothing();
         }
     }
     
