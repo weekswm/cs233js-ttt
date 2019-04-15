@@ -85,50 +85,44 @@ class TTT
             -   remember that squares have an integer id 0 - 8*/
     
     handleClick(i) {
-
         // Get the id from the square and put it in a variable
         // Remember that the id is an integer 0 - 8
-        let clickedSquare = event.srcElement.id;
-        for (i = 0; i < this.squares.length; i++)
-        {
-            if (i == clickedSquare)
+        let clickedSquare = document.getElementById(i);
+        if (this.xIsNext == true)
+        {    
+            // Set the element in the squares array to the player's symbol
+            clickedSquare.innerHTML = "X";
+            this.squares[i] = "X";
+            // Set the onclick handler for this square in the UI to an empty anonymous function or arrow function
+            clickedSquare.removeEventListener("onclick", this.handleClick);
+            // Update the variable xIsNext
+            this.xIsNext = false;
+            // If calculateWinner returns true
+            if (this.calculateWinner() == true)
             {
-                if (this.xIsNext == true)
-                {    
-                    // Set the element in the squares array to the player's symbol
-                    event.srcElement.innerHTML = "X";
-                    this.squares[clickedSquare] = "X";
-                    // Set the onclick handler for this square in the UI to an empty anonymous function or arrow function
-                    document.getElementById(clickedSquare).removeEventListener("onclick", this.handleClick);
-                    // Update the variable xIsNext
-                    this.xIsNext = false;
-                    // If calculateWinner returns true
-                    if (this.calculateWinner() == true)
-                    {
-                    // highlight the winner and disable all of the squares
-                        this.highlightWinner();
-                        this.disableAll();
-                    }
-                    // otherwise update the status in the UI to display the player
-                    else
-                        document.getElementById("status").innerHTML = "Next Player: O";
-                }
-                else
-                {
-                    // Repeat above, but change "X" to "O"
-                    event.srcElement.innerHTML = "O";
-                    this.squares[clickedSquare] = "O";
-                    document.getElementById(clickedSquare).removeEventListener("onclick", this.handleClick);
-                    this.xIsNext = true;
-                    if (this.calculateWinner() == true)
-                    {
-                        this.highlightWinner();
-                        this.disableAll();
-                    }
-                    else
-                        document.getElementById("status").innerHTML = "Next Player: X";    
-                }
+            // highlight the winner and disable all of the squares
+                this.highlightWinner();
+                this.disableAll();
             }
+            // otherwise update the status in the UI to display the player
+            else
+                document.getElementById("status").innerHTML = "Next Player: O";
+        }
+        else
+        {
+            // Repeat above, but change "X" to "O"
+            clickedSquare.innerHTML = "O";
+            this.squares[i] = "O";
+            clickedSquare.removeEventListener("onclick", this.handleClick);
+            this.xIsNext = true;
+            if (this.calculateWinner() == true)
+            {
+                this.highlightWinner();
+                this.disableAll();
+            }
+            else
+                document.getElementById("status").innerHTML = "Next Player: X";    
+        
         }
     }
 
@@ -145,16 +139,16 @@ class TTT
             //      add the class red to the square
             document.getElementById(this.winningLine[i]).style.color = "red";   
         }
-        // Disable all of the squares
-        this.disableAll();
     }
 
     disableAll() {
         // Set the onclick handler for all squares to function that does nothing
         // The id of the square is a number 0 - 8
+        let boardSquares = document.getElementsByName("square");
         for (let i = 0; i < this.squares.length; i++)
         {
-            this.squares[i].onclick = this.doNothing();
+            this.squares[i] = boardSquares[i];
+            boardSquares[i].onclick = this.doNothing;
         }
     }
     
