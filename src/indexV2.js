@@ -94,7 +94,7 @@ class TTT
             clickedSquare.innerHTML = "X";
             this.squares[i] = "X";
             // Set the onclick handler for this square in the UI to an empty anonymous function or arrow function
-            clickedSquare.removeEventListener("onclick", this.handleClick);
+            clickedSquare.onclick = this.doNothing;
             // Update the variable xIsNext
             this.xIsNext = false;
             // If calculateWinner returns true
@@ -113,7 +113,7 @@ class TTT
             // Repeat above, but change "X" to "O"
             clickedSquare.innerHTML = "O";
             this.squares[i] = "O";
-            clickedSquare.removeEventListener("onclick", this.handleClick);
+            clickedSquare.onclick = this.doNothing;
             this.xIsNext = true;
             if (this.calculateWinner() == true)
             {
